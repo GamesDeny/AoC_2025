@@ -39,14 +39,22 @@ public class AoC1P2 extends AoC1 {
             case RIGHT -> code.get() + direction.value();
             case LEFT -> code.get() - direction.value();
         };
-        if (res == 0 || res < 0) {
-            result.incrementAndGet();
+        var totalCount = Math.abs(res) / 100;
+        if (code.get() != 0 && (res == 0 || res < 0)) {
+            totalCount += 1;
         }
-        result.addAndGet(Math.abs(direction.value()) / 100);
+        result.addAndGet(totalCount);
 
-        return res < 0
-                ? 100 - Math.abs(res) % 100
-                : Math.abs(res) % 100;
+        final long finalRes = res < 0
+                ? ((100 - (Math.abs(res) % 100)) % 100)
+                : (Math.abs(res) % 100);
+        if (totalCount > 0 && direction.value() > 100) {
+            logger.info("Start-final dir-val: %d-%d %s%d   total: %d".formatted(
+                    code.get(), finalRes,
+                    direction.direction().name().charAt(0), direction.value(), totalCount
+            ));
+        }
+        return finalRes;
     }
 
     @Override
