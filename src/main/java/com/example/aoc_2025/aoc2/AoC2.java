@@ -1,6 +1,7 @@
 package com.example.aoc_2025.aoc2;
 
 import com.example.aoc_2025.AbstractAoC;
+import com.google.common.base.Splitter;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,8 +9,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.LongStream;
 
 /*
 11-22,95-115,998-1012,1188511880-1188511890,222220-222224,
@@ -36,7 +39,7 @@ What do you get if you add up all of the invalid IDs?
 public class AoC2 extends AbstractAoC<Long> {
 
     public static void main(String[] args) {
-        new AoC2().execute();
+        new AoC2().execute();//res = 18700015741
     }
 
     @Override
@@ -62,11 +65,23 @@ public class AoC2 extends AbstractAoC<Long> {
     }
 
     private List<Long> getInvalidIds(Range range) {
-        var res = new ArrayList<Long>();
-        for (var left = range.start(); left < range.end(); left++) {
+        return LongStream.rangeClosed(range.start(), range.end())
+                .filter(this::isValInvalid)
+                .boxed()
+                .toList();
+    }
 
+    private boolean isValInvalid(long l) {
+        if (l > 10) {
+            var s = String.valueOf(l);
+            if (s.length() % 2 == 0) {
+                var splitList = Splitter.fixedLength(s.length() / 2)
+                        .splitToList(s);
+                var set = new HashSet<>(splitList);
+                return set.size() == 1;
+            }
         }
-        return res;
+        return false;
     }
 
     @Override

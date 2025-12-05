@@ -7,8 +7,4 @@ public record Range(Long start, Long end) {
         this(Long.parseLong(split[0]), Long.parseLong(split[1]));
     }
 
-    public Range total(Range range) {
-        return null;
-    }
-
 }
