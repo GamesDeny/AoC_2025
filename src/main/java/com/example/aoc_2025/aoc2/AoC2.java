@@ -71,7 +71,7 @@ public class AoC2 extends AbstractAoC<Long> {
                 .toList();
     }
 
-    private boolean isValInvalid(long l) {
+    boolean isValInvalid(long l) {
         if (l > 10) {
             var s = String.valueOf(l);
             if (s.length() % 2 == 0) {
