@@ -33,35 +33,7 @@ public class AoC3 extends AbstractAoC<Long> {
         var result = 0L;
         try (var fis = new FileInputStream(file); var sc = new Scanner(fis)) {
             while (sc.hasNextLine()) {
-                var bank = Splitter.fixedLength(getSplitSize())
-                        .splitToList(sc.nextLine()).stream()
-                        .map(Integer::parseInt)
-                        .toList();
-                var maxL = bank.stream()
-                        .max(Integer::compareTo)
-                        .orElseThrow(() -> new IllegalArgumentException("Bank is empty"));
-
-                var lIndex = 0;
-                for (var i = 0; i < bank.size(); i++) {
-                    if (bank.get(i).equals(maxL)) {
-                        lIndex = i;
-                        break;
-                    }
-                }
-                var otherMax = 0;
-                if (lIndex == bank.size() - 1) {
-                    otherMax = bank.stream()
-                            .limit(lIndex)
-                            .max(Integer::compareTo)
-                            .orElseThrow(() -> new IllegalArgumentException("Bank is empty"));
-                    result += otherMax * 10L + maxL;
-                } else {
-                    otherMax = bank.stream()
-                            .skip(lIndex + 1L)
-                            .max(Integer::compareTo)
-                            .orElseThrow(() -> new IllegalArgumentException("Bank is empty"));
-                    result += maxL * 10L + otherMax;
-                }
+                result += parseResult(sc.nextLine());
             }
         } catch (FileNotFoundException _) {
             logger.severe("File not found");
@@ -72,8 +44,35 @@ public class AoC3 extends AbstractAoC<Long> {
         return result;
     }
 
-    int getSplitSize() {
-        return 1;
+    Long parseResult(String line) {
+        var bank = Splitter.fixedLength(1)
+                .splitToList(line).stream()
+                .map(Long::parseLong)
+                .toList();
+        var maxL = bank.stream()
+                .max(Long::compareTo)
+                .orElseThrow(() -> new IllegalArgumentException("Bank is empty"));
+
+        var lIndex = 0;
+        for (var i = 0; i < bank.size(); i++) {
+            if (bank.get(i).equals(maxL)) {
+                lIndex = i;
+                break;
+            }
+        }
+
+        if (lIndex == bank.size() - 1) {
+            var otherMax = bank.stream()
+                    .limit(lIndex)
+                    .max(Long::compareTo)
+                    .orElseThrow(() -> new IllegalArgumentException("Bank is empty"));
+            return otherMax * 10L + maxL;
+        }
+        var otherMax = bank.stream()
+                .skip(lIndex + 1L)
+                .max(Long::compareTo)
+                .orElseThrow(() -> new IllegalArgumentException("Bank is empty"));
+        return maxL * 10L + otherMax;
     }
 
     @Override
@@ -84,6 +83,10 @@ public class AoC3 extends AbstractAoC<Long> {
     @Override
     public Long expectedValue() {
         return 357L;
+    }
+
+    public int getLength() {
+        return 2;
     }
 
 }
