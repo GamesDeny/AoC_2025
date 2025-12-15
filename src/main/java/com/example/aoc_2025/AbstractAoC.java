@@ -1,20 +1,22 @@
 package com.example.aoc_2025;
 
+import lombok.AccessLevel;
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.File;
 import java.util.Objects;
-import java.util.logging.Logger;
 
+@Slf4j(access = AccessLevel.PUBLIC)
 public abstract class AbstractAoC<T> {
-    public static final Logger logger = Logger.getLogger(AbstractAoC.class.getName());
 
     public void execute() {
         var exRes = exec(FileUtils.getExample(getCount()));
-        logger.info("Ex res: " + exRes);
+        log.info("Ex res: {}", exRes);
 
         if (!Objects.equals(exRes, expectedValue())) {
-            throw new IllegalArgumentException("FAILED TEST");
+            throw new IllegalArgumentException("FAILED TEST, expected " + expectedValue() + ", got " + exRes);
         }
-        logger.info("Validation result: " + exec(FileUtils.get(getCount())));
+        log.info("Validation result: {}", exec(FileUtils.get(getCount())));
     }
 
     public abstract T exec(File file);

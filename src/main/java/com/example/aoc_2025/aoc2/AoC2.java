@@ -52,9 +52,9 @@ public class AoC2 extends AbstractAoC<Long> {
                     .toList()
             );
         } catch (FileNotFoundException _) {
-            logger.severe("File not found");
+            log.warn("File not found");
         } catch (IOException _) {
-            logger.severe("Error in file read");
+            log.warn("Error in file read");
         }
 
         return inputs.stream()

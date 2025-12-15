@@ -27,9 +27,9 @@ public class AoC4P2 extends AoC4 {
                 fileRes[maxLength++] = sc.nextLine().split("");
             }
         } catch (FileNotFoundException _) {
-            logger.severe("File not found");
+            log.warn("File not found");
         } catch (IOException _) {
-            logger.severe("Error in file read");
+            log.warn("Error in file read");
         }
 
         int index;
@@ -71,13 +71,12 @@ public class AoC4P2 extends AoC4 {
                     .map(s -> s.equals(TEMP_SYMBOL) ? "." : s)
                     .toArray(String[]::new);
 
-            logger.info("Final bigArray with increment %d \n\n%s\n\n"
-                    .formatted(
-                            increment,
-                            Arrays.stream(fileRes)
-                                    .limit(maxLength)
-                                    .map(Arrays::toString)
-                                    .collect(Collectors.joining("\n")))
+            log.info("Final bigArray with increment {} \n\n{}\n\n",
+                    increment,
+                    Arrays.stream(fileRes)
+                            .limit(maxLength)
+                            .map(Arrays::toString)
+                            .collect(Collectors.joining("\n"))
             );
         } while (increment != 0);
 

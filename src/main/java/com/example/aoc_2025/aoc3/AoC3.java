@@ -23,6 +23,7 @@ In 818181911112111, the largest joltage you can produce is 92.
 The total output joltage is the sum of the maximum joltage from each bank, so in this example, the total output joltage is 98 + 89 + 78 + 92 = 357.
 * */
 public class AoC3 extends AbstractAoC<Long> {
+    private static final String BANK_IS_EMPTY_EXCEPTION = "Bank is empty";
 
     public static void main(String[] args) {
         new AoC3().execute();//res =17427
@@ -36,9 +37,9 @@ public class AoC3 extends AbstractAoC<Long> {
                 result += parseResult(sc.nextLine());
             }
         } catch (FileNotFoundException _) {
-            logger.severe("File not found");
+            log.warn("File not found");
         } catch (IOException _) {
-            logger.severe("Error in file read");
+            log.warn("Error in file read");
         }
 
         return result;
@@ -51,7 +52,7 @@ public class AoC3 extends AbstractAoC<Long> {
                 .toList();
         var maxL = bank.stream()
                 .max(Long::compareTo)
-                .orElseThrow(() -> new IllegalArgumentException("Bank is empty"));
+                .orElseThrow(() -> new IllegalArgumentException(BANK_IS_EMPTY_EXCEPTION));
 
         var lIndex = 0;
         for (var i = 0; i < bank.size(); i++) {
@@ -65,13 +66,13 @@ public class AoC3 extends AbstractAoC<Long> {
             var otherMax = bank.stream()
                     .limit(lIndex)
                     .max(Long::compareTo)
-                    .orElseThrow(() -> new IllegalArgumentException("Bank is empty"));
+                    .orElseThrow(() -> new IllegalArgumentException(BANK_IS_EMPTY_EXCEPTION));
             return otherMax * 10L + maxL;
         }
         var otherMax = bank.stream()
                 .skip(lIndex + 1L)
                 .max(Long::compareTo)
-                .orElseThrow(() -> new IllegalArgumentException("Bank is empty"));
+                .orElseThrow(() -> new IllegalArgumentException(BANK_IS_EMPTY_EXCEPTION));
         return maxL * 10L + otherMax;
     }
 

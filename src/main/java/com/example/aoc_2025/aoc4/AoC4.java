@@ -42,9 +42,9 @@ public class AoC4 extends AbstractAoC<String> {
             tempLines[2] = EMPTY_STRING_ARRAY;
             result += calculateForLines(tempLines);
         } catch (FileNotFoundException _) {
-            logger.severe("File not found");
+            log.warn("File not found");
         } catch (IOException _) {
-            logger.severe("Error in file read");
+            log.warn("Error in file read");
         }
 
         return String.valueOf(result);
@@ -105,14 +105,6 @@ public class AoC4 extends AbstractAoC<String> {
                 mainLine[i] = TEMP_SYMBOL;
             }
         }
-        /*
-        logger.info("Found %d elements for rectangle: \n%s\n%s\n%s".formatted(
-                count.get(),
-                Arrays.toString(upperLine),
-                Arrays.toString(mainLine),
-                Arrays.toString(lowerLine)
-        ));
-*/
         return count.get();
     }
 

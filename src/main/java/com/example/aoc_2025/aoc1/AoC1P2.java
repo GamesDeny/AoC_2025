@@ -49,10 +49,10 @@ public class AoC1P2 extends AoC1 {
                 ? ((100 - (Math.abs(res) % 100)) % 100)
                 : (Math.abs(res) % 100);
         if (totalCount > 0 && direction.value() > 100) {
-            logger.info("Start-final dir-val: %d-%d %s%d   total: %d".formatted(
+            log.info("Start-final dir-val: {}-{} {}-{} total: {}",
                     code.get(), finalRes,
                     direction.direction().name().charAt(0), direction.value(), totalCount
-            ));
+            );
         }
         return finalRes;
     }
