@@ -7,8 +7,8 @@ public class AoC5P2 extends AoC5 {
     }
 
     @Override
-    public String expectedValue() {
-        return "";
+    public Long expectedValue() {
+        return 0L;
     }
 
 }

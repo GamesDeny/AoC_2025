@@ -44,11 +44,11 @@ public class AoC2 extends AbstractAoC<Long> {
 
     @Override
     public Long exec(File file) {
-        var inputs = new ArrayList<Range>();
+        var inputs = new ArrayList<StringToRange>();
 
         try (var fis = new FileInputStream(file); var sc = new Scanner(fis)) {
             inputs.addAll(Arrays.stream(sc.nextLine().split(","))
-                    .map(Range::new)
+                    .map(StringToRange::new)
                     .toList()
             );
         } catch (FileNotFoundException _) {
@@ -64,8 +64,8 @@ public class AoC2 extends AbstractAoC<Long> {
                 .orElse(0L);
     }
 
-    private List<Long> getInvalidIds(Range range) {
-        return LongStream.rangeClosed(range.start(), range.end())
+    private List<Long> getInvalidIds(StringToRange stringToRange) {
+        return LongStream.rangeClosed(stringToRange.start(), stringToRange.end())
                 .filter(this::isValInvalid)
                 .boxed()
                 .toList();
